@@ -180,12 +180,13 @@ class HalfArcPainter extends CustomPainter {
 
     final Paint blueOutlineArc = Paint()
       ..color = Colors.blue
-      ..strokeWidth = 11 // slightly larger than progress arc
+      ..strokeWidth = 11.2 // slightly larger than progress arc
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
     final Paint progressArc = Paint()
       ..color = const Color.fromARGB(255, 53, 238, 59)
+      //const Color.fromARGB(255, 144, 255, 18),
       ..strokeWidth = 10
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;

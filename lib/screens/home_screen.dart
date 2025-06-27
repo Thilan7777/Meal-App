@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meal_app/custom_widgets/bar_column.dart';
+import 'package:meal_app/custom_widgets/bottom_navbar.dart';
 import 'package:meal_app/custom_widgets/custom_widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,6 +12,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,7 +160,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: 60,
                                   alignment: Alignment(0, -0.6),
                                   containerColor: Color(0xFF38342C),
-                                  progressColor: Colors.lightGreenAccent,
+                                  progressColor:
+                                      const Color.fromARGB(255, 144, 255, 18),
                                   boxShape: BoxShape.rectangle),
                               SizedBox(
                                 height: 2,
@@ -680,14 +684,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14),
-          child: Container(
-            height: 50,
-            decoration: BoxDecoration(
-                color: Color(0xFF38342C),
-                borderRadius: BorderRadius.circular(14)),
-          ),
+        bottomNavigationBar: BottomNavBar(
+          selectedIndex: _selectedIndex,
+          onTap: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
         ));
   }
 }

@@ -1,0 +1,136 @@
+import 'package:flutter/material.dart';
+
+class BottomNavBar extends StatelessWidget {
+  final int selectedIndex;
+  final Function(int) onTap;
+
+  const BottomNavBar({
+    super.key,
+    required this.selectedIndex,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14),
+      child: Container(
+        height: 50,
+        decoration: BoxDecoration(
+          color: Color(0xFF38342C),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _NavBarItem(
+              isActive: selectedIndex == 0,
+              splashColor: Colors.amberAccent,
+              activeColor: const Color.fromARGB(68, 255, 214, 64),
+              onTap: () => onTap(0),
+              icon: Image.asset("assets/Home.png"),
+            ),
+            _NavBarItem(
+              isActive: selectedIndex == 1,
+              splashColor: Colors.amberAccent,
+              activeColor: const Color.fromARGB(68, 255, 214, 64),
+              onTap: () => onTap(1),
+              icon: Image.asset("assets/Group 6.png"),
+            ),
+            _NavBarItem(
+              isActive: selectedIndex == 2,
+              splashColor: Colors.amberAccent,
+              activeColor: const Color.fromARGB(68, 255, 214, 64),
+              onTap: () => onTap(2),
+              icon: Image.asset("assets/Sparkling.png"),
+            ),
+            _NavBarItem(
+              isActive: selectedIndex == 3,
+              splashColor: Colors.amberAccent,
+              activeColor: const Color.fromARGB(68, 255, 214, 64),
+              onTap: () => onTap(3),
+              icon: Image.asset("assets/User.png"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _NavBarItem extends StatelessWidget {
+  final bool isActive;
+  final Color splashColor;
+  final Color activeColor;
+  final VoidCallback onTap;
+  final Widget icon;
+
+  const _NavBarItem({
+    super.key,
+    required this.isActive,
+    required this.splashColor,
+    required this.activeColor,
+    required this.onTap,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      shape: const CircleBorder(),
+      child: InkWell(
+        splashColor: splashColor,
+        borderRadius: BorderRadius.circular(22),
+        onTap: onTap,
+        child: Container(
+          width: 44,
+          height: 44,
+          decoration: BoxDecoration(
+            color: isActive ? activeColor : Colors.black,
+            shape: BoxShape.circle,
+          ),
+          child: Center(child: icon),
+        ),
+      ),
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _pages = [
+    HomeScreen(),
+    //AddMealPlanPage(),
+    //SparklePage(),
+    //UserProfilePage(),
+  ];
+
+  void onNavTap(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.black,
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _pages,
+        ),
+        bottomNavigationBar: BottomNavBar(
+          selectedIndex: _selectedIndex,
+          onTap: onNavTap,
+        ));
+  }
+}

@@ -21,9 +21,9 @@ Widget barColumn({required String day, required double fill}) {
             width: 22,
             height: 80 * fill,
             decoration: BoxDecoration(
-              color: Colors.greenAccent,
+              color: const Color.fromARGB(255, 144, 255, 18),
               borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(8),
+                bottom: Radius.zero,
                 top: Radius.circular(fill == 1.0 ? 8 : 0),
               ),
             ),
