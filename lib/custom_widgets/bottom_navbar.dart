@@ -66,7 +66,6 @@ class _NavBarItem extends StatelessWidget {
   final Widget icon;
 
   const _NavBarItem({
-    super.key,
     required this.isActive,
     required this.splashColor,
     required this.activeColor,
