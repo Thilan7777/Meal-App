@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meal_app/custom_widgets/bar_column.dart';
 import 'package:meal_app/custom_widgets/bottom_navbar.dart';
 import 'package:meal_app/custom_widgets/custom_widgets.dart';
+import 'package:meal_app/services/navigation_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -687,6 +688,7 @@ class _HomeScreenState extends State<HomeScreen> {
         bottomNavigationBar: BottomNavBar(
           selectedIndex: _selectedIndex,
           onTap: (index) {
+            NavigationService.navigateToTab(context, index);
             setState(() {
               _selectedIndex = index;
             });
