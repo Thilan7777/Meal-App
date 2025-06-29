@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../providers/app_state_provider.dart';
-import '../custom_widgets/bottom_navbar.dart';
 import '../services/navigation_service.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -137,10 +136,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           );
         },
-      ),
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: 3,
-        onTap: (index) => NavigationService.navigateToTab(context, index),
       ),
     );
   }

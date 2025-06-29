@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../providers/app_state_provider.dart';
-import '../custom_widgets/bottom_navbar.dart';
 import '../services/navigation_service.dart';
 
 class StatsScreen extends StatefulWidget {
@@ -70,10 +69,6 @@ class _StatsScreenState extends State<StatsScreen> {
             ),
           );
         },
-      ),
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: 2,
-        onTap: (index) => NavigationService.navigateToTab(context, index),
       ),
     );
   }

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../providers/app_state_provider.dart';
 import '../models/meal_model.dart';
-import '../custom_widgets/bottom_navbar.dart';
 import '../services/navigation_service.dart';
 
 class AddMealScreen extends StatefulWidget {
@@ -137,10 +136,6 @@ class _AddMealScreenState extends State<AddMealScreen> {
             ),
           );
         },
-      ),
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: 1,
-        onTap: (index) => NavigationService.navigateToTab(context, index),
       ),
     );
   }

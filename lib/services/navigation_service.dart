@@ -6,34 +6,39 @@ import '../screens/stats_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/meal_suggestions_screen.dart';
 import '../screens/calorie_count_screen.dart';
+import '../screens/shell_screen.dart';
 
 class NavigationService {
   static final GoRouter router = GoRouter(
     initialLocation: '/',
     routes: [
-      // Bottom Navigation Routes
-      GoRoute(
-        path: '/',
-        name: 'home',
-        builder: (context, state) => const HomeScreen(),
+      ShellRoute(
+        builder: (context, state, child) {
+          return ShellScreen(child: child);
+        },
+        routes: [
+          GoRoute(
+            path: '/',
+            name: 'home',
+            builder: (context, state) => const HomeScreen(),
+          ),
+          GoRoute(
+            path: '/add-meal',
+            name: 'add-meal',
+            builder: (context, state) => const AddMealScreen(),
+          ),
+          GoRoute(
+            path: '/stats',
+            name: 'stats',
+            builder: (context, state) => const StatsScreen(),
+          ),
+          GoRoute(
+            path: '/profile',
+            name: 'profile',
+            builder: (context, state) => const ProfileScreen(),
+          ),
+        ],
       ),
-      GoRoute(
-        path: '/add-meal',
-        name: 'add-meal',
-        builder: (context, state) => const AddMealScreen(),
-      ),
-      GoRoute(
-        path: '/stats',
-        name: 'stats',
-        builder: (context, state) => const StatsScreen(),
-      ),
-      GoRoute(
-        path: '/profile',
-        name: 'profile',
-        builder: (context, state) => const ProfileScreen(),
-      ),
-
-      // Feature Routes
       GoRoute(
         path: '/calorie-count',
         name: 'calorie-count',
