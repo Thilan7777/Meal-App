@@ -14,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -59,20 +61,89 @@ class _HomeScreenState extends State<HomeScreen> {
         final weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
         return Scaffold(
+          key: _scaffoldKey,
           backgroundColor: Colors.black,
+          drawer: Drawer(
+            backgroundColor: Colors.black,
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                const DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.blueAccent,
+                  ),
+                  child: Text(
+                    'Menu',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: const Icon(color: Colors.white, Icons.person),
+                  title: const Text('Profile',
+                      style: TextStyle(
+                        color: Colors.white,
+                      )),
+                  onTap: () {
+                    context.go('/profile');
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(color: Colors.white, Icons.bar_chart),
+                  title: const Text('Weekly Summary',
+                      style: TextStyle(
+                        color: Colors.white,
+                      )),
+                  onTap: () {
+                    context.go('/stats');
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(color: Colors.white, Icons.local_drink),
+                  title: const Text('Water Tracker',
+                      style: TextStyle(
+                        color: Colors.white,
+                      )),
+                  onTap: () {
+                    // TODO: Implement Water Tracker page
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(color: Colors.white, Icons.import_export),
+                  title: const Text('Export Data',
+                      style: TextStyle(
+                        color: Colors.white,
+                      )),
+                  onTap: () {
+                    // TODO: Implement Export Data functionality
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             toolbarHeight: 100,
             backgroundColor: Colors.black,
             title: Row(
               children: [
-                CustomWidgets(
-                  imageHeight: 37.h,
-                  imageWidth: 37.w,
-                  height: 37.h,
-                  width: 42.w,
-                  imagePath: 'assets/Menu.png',
-                  containerColor: const Color(0xFF968B75),
-                  boxShape: BoxShape.rectangle,
+                GestureDetector(
+                  onTap: () => _scaffoldKey.currentState?.openDrawer(),
+                  child: CustomWidgets(
+                    imageHeight: 37.h,
+                    imageWidth: 37.w,
+                    height: 37.h,
+                    width: 42.w,
+                    imagePath: 'assets/Menu.png',
+                    containerColor: const Color.fromARGB(158, 150, 139, 117),
+                    boxShape: BoxShape.rectangle,
+                  ),
                 ),
                 const Spacer(),
                 Container(
@@ -99,14 +170,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 const Spacer(),
-                CustomWidgets(
-                  imagePath: 'assets/Settings.png',
-                  containerColor: const Color(0xFF968B75),
-                  boxShape: BoxShape.rectangle,
-                  imageHeight: 37.h,
-                  imageWidth: 37.w,
-                  height: 37.h,
-                  width: 42.w,
+                GestureDetector(
+                  onTap: () => context.push('/settings'),
+                  child: CustomWidgets(
+                    imagePath: 'assets/Settings.png',
+                    containerColor: const Color.fromARGB(158, 150, 139, 117),
+                    boxShape: BoxShape.rectangle,
+                    imageHeight: 37.h,
+                    imageWidth: 37.w,
+                    height: 37.h,
+                    width: 42.w,
+                  ),
                 ),
               ],
             ),
@@ -181,99 +255,104 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: CustomContainer(
-                      containerColor: Colors.blueAccent,
-                      width: 380.w,
-                      height: 122.h,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 38,
-                            top: 28,
-                            bottom: 18,
-                            child: Container(width: 2, color: Colors.white),
-                          ),
-                          Positioned(
-                            left: 38,
-                            right: 12,
-                            bottom: 18,
-                            child: Container(height: 2, color: Colors.white),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 2),
-                              const Center(
-                                child: Text(
-                                  "Weekly Overall Calorie Stat",
-                                  style: TextStyle(
-                                      fontFamily: "Kanit",
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 14),
+                    child: GestureDetector(
+                      onTap: () {
+                        context.go('/stats');
+                      },
+                      child: CustomContainer(
+                        containerColor: Colors.blueAccent,
+                        width: 380.w,
+                        height: 122.h,
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              left: 38,
+                              top: 28,
+                              bottom: 18,
+                              child: Container(width: 2, color: Colors.white),
+                            ),
+                            Positioned(
+                              left: 38,
+                              right: 12,
+                              bottom: 18,
+                              child: Container(height: 2, color: Colors.white),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 2),
+                                const Center(
+                                  child: Text(
+                                    "Weekly Overall Calorie Stat",
+                                    style: TextStyle(
+                                        fontFamily: "Kanit",
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 14),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 10),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 10, bottom: 15),
-                                    child: Column(
-                                      children: [
-                                        Text("3200",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 10)),
-                                        SizedBox(height: 5),
-                                        Text("2400",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 10)),
-                                        SizedBox(height: 5),
-                                        Text("1600",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 10)),
-                                        SizedBox(height: 5),
-                                        Text("800",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 10)),
-                                        SizedBox(height: 5),
-                                        Text("0",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 10)),
-                                      ],
+                                SizedBox(height: 10),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.only(left: 10, bottom: 15),
+                                      child: Column(
+                                        children: [
+                                          Text("3200",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 10)),
+                                          SizedBox(height: 5),
+                                          Text("2400",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 10)),
+                                          SizedBox(height: 5),
+                                          Text("1600",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 10)),
+                                          SizedBox(height: 5),
+                                          Text("800",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 10)),
+                                          SizedBox(height: 5),
+                                          Text("0",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 10)),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(width: 8),
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: List.generate(7, (index) {
-                                        final day = weekdays[index];
-                                        final calories = weeklyData[day] ?? 0;
-                                        final maxCalories =
-                                            user.dailyCalorieGoal > 0
-                                                ? user.dailyCalorieGoal
-                                                : 3200;
-                                        return barColumn(
-                                          day: day,
-                                          fill: (calories / maxCalories)
-                                              .clamp(0.0, 1.0),
-                                        );
-                                      }),
+                                    SizedBox(width: 8),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: List.generate(7, (index) {
+                                          final day = weekdays[index];
+                                          final calories = weeklyData[day] ?? 0;
+                                          final maxCalories =
+                                              user.dailyCalorieGoal > 0
+                                                  ? user.dailyCalorieGoal
+                                                  : 3200;
+                                          return barColumn(
+                                            day: day,
+                                            fill: (calories / maxCalories)
+                                                .clamp(0.0, 1.0),
+                                          );
+                                        }),
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

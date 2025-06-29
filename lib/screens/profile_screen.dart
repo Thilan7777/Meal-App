@@ -268,8 +268,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               radius: 40.r,
               backgroundColor: Colors.white.withOpacity(0.2),
               backgroundImage:
-                  imagePath != null ? FileImage(File(imagePath)) : null,
-              child: imagePath == null
+                  (imagePath != null && File(imagePath).existsSync())
+                      ? FileImage(File(imagePath))
+                      : null,
+              child: (imagePath == null || !File(imagePath).existsSync())
                   ? Icon(Icons.person, size: 40.sp, color: Colors.white)
                   : null,
             ),

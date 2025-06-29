@@ -111,18 +111,19 @@ class AppStateProvider extends ChangeNotifier {
   // Daily data operations
   Future<void> _loadTodayData() async {
     final today = DateTime.now();
-    _todayLog = await _databaseService.getDailyLog(today);
+    final existingLog = await _databaseService.getDailyLog(today);
     _todayMeals = await _databaseService.getTodayMeals();
 
-    // Create today's log if it doesn't exist
-    if (_todayLog == null) {
-      _todayLog = DailyLog.fromMeals(
-        id: _uuid.v4(),
-        date: today,
-        meals: _todayMeals,
-      );
-      await _databaseService.insertOrUpdateDailyLog(_todayLog!);
-    }
+    // Always create a new log from the latest meals to ensure totals are correct
+    _todayLog = DailyLog.fromMeals(
+      id: existingLog?.id ?? _uuid.v4(),
+      date: today,
+      meals: _todayMeals,
+      waterIntake: existingLog?.waterIntake ?? 0.0,
+      weight: existingLog?.weight,
+    );
+
+    await _databaseService.insertOrUpdateDailyLog(_todayLog!);
   }
 
   Future<void> _loadWeeklyData() async {

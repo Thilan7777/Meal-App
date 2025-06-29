@@ -6,6 +6,7 @@ import '../screens/stats_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/meal_suggestions_screen.dart';
 import '../screens/calorie_count_screen.dart';
+import '../screens/settings_screen.dart';
 import '../screens/shell_screen.dart';
 
 class NavigationService {
@@ -48,6 +49,11 @@ class NavigationService {
         path: '/meal-suggestions',
         name: 'meal-suggestions',
         builder: (context, state) => const MealSuggestionsScreen(),
+      ),
+      GoRoute(
+        path: '/settings',
+        name: 'settings',
+        builder: (context, state) => const SettingsScreen(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(
@@ -95,6 +101,10 @@ class NavigationService {
 
   static void goToMealSuggestions(BuildContext context, {String? mealType}) {
     context.push('/meal-suggestions', extra: mealType);
+  }
+
+  static void goToSettings(BuildContext context) {
+    context.push('/settings');
   }
 
   // Bottom navigation helper
