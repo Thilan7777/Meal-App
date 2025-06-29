@@ -1,6 +1,7 @@
 class User {
   final String id;
   final String name;
+  final String? profileImagePath;
   final double currentWeight;
   final double targetWeight;
   final double height; // in cm
@@ -14,6 +15,7 @@ class User {
   User({
     required this.id,
     required this.name,
+    this.profileImagePath,
     required this.currentWeight,
     required this.targetWeight,
     required this.height,
@@ -41,6 +43,7 @@ class User {
     return {
       'id': id,
       'name': name,
+      'profile_image_path': profileImagePath,
       'current_weight': currentWeight,
       'target_weight': targetWeight,
       'height': height,
@@ -58,6 +61,7 @@ class User {
     return User(
       id: map['id'],
       name: map['name'],
+      profileImagePath: map['profile_image_path'],
       currentWeight: map['current_weight'].toDouble(),
       targetWeight: map['target_weight'].toDouble(),
       height: map['height'].toDouble(),
@@ -73,6 +77,7 @@ class User {
   // Copy with method for updates
   User copyWith({
     String? name,
+    String? profileImagePath,
     double? currentWeight,
     double? targetWeight,
     double? height,
@@ -84,6 +89,7 @@ class User {
     return User(
       id: id,
       name: name ?? this.name,
+      profileImagePath: profileImagePath ?? this.profileImagePath,
       currentWeight: currentWeight ?? this.currentWeight,
       targetWeight: targetWeight ?? this.targetWeight,
       height: height ?? this.height,

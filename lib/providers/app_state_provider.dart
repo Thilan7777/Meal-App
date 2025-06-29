@@ -73,6 +73,7 @@ class AppStateProvider extends ChangeNotifier {
     required String gender,
     required double dailyCalorieGoal,
     double dailyWaterGoal = 3.0,
+    String? profileImagePath,
   }) async {
     try {
       final user = User(

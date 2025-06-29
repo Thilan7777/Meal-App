@@ -40,6 +40,7 @@ class DatabaseService {
         height REAL NOT NULL,
         age INTEGER NOT NULL,
         gender TEXT NOT NULL,
+        profile_image_path TEXT,
         daily_calorie_goal REAL NOT NULL,
         daily_water_goal REAL DEFAULT 3.0,
         created_at TEXT NOT NULL,

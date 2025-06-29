@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+
 import '../providers/app_state_provider.dart';
 import '../services/navigation_service.dart';
 
@@ -29,6 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   String _selectedGender = 'Male';
   bool _isEditing = false;
+  String? _profileImagePath;
 
   @override
   void initState() {
@@ -52,6 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _dailyCalorieGoalController.text = user.dailyCalorieGoal.toString();
       _dailyWaterGoalController.text = user.dailyWaterGoal.toString();
       _selectedGender = user.gender;
+      _profileImagePath = user.profileImagePath;
     }
 
     if (todayLog != null) {
@@ -234,6 +239,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildProfileSummaryCard(AppStateProvider appState) {
     final user = appState.currentUser!;
+    final imagePath = _isEditing ? _profileImagePath : user.profileImagePath;
 
     return Container(
       padding: EdgeInsets.all(20.w),
@@ -247,15 +253,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       child: Column(
         children: [
-          CircleAvatar(
-            radius: 40.r,
-            backgroundColor: Colors.white.withOpacity(0.2),
-            child: Icon(
-              Icons.person,
-              size: 40.sp,
-              color: Colors.white,
+          if (_isEditing)
+            GestureDetector(
+              onTap: _pickProfileImage,
+              child: CircleAvatar(
+                radius: 40.r,
+                backgroundColor: Colors.white.withOpacity(0.2),
+                child: Icon(
+                    size: 40, color: Colors.white, Icons.add_photo_alternate),
+              ),
+            )
+          else
+            CircleAvatar(
+              radius: 40.r,
+              backgroundColor: Colors.white.withOpacity(0.2),
+              backgroundImage:
+                  imagePath != null ? FileImage(File(imagePath)) : null,
+              child: imagePath == null
+                  ? Icon(Icons.person, size: 40.sp, color: Colors.white)
+                  : null,
             ),
-          ),
           SizedBox(height: 16.h),
           Text(
             user.name,
@@ -677,6 +694,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       gender: _selectedGender,
       dailyCalorieGoal: double.parse(_dailyCalorieGoalController.text),
       dailyWaterGoal: double.parse(_dailyWaterGoalController.text),
+      profileImagePath: _profileImagePath,
     );
 
     if (appState.errorMessage == null) {
@@ -689,6 +707,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  //Image picker
+  Future<void> _pickProfileImage() async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery);
+    if (picked != null) {
+      setState(() {
+        _profileImagePath = picked.path;
+      });
+    }
+  }
+
   Future<void> _saveProfile() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -697,6 +726,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     final updatedUser = currentUser.copyWith(
       name: _nameController.text.trim(),
+      profileImagePath: _profileImagePath,
       currentWeight: double.parse(_currentWeightController.text),
       targetWeight: double.parse(_targetWeightController.text),
       height: double.parse(_heightController.text),
