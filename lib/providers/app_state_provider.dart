@@ -213,6 +213,20 @@ class AppStateProvider extends ChangeNotifier {
     }
   }
 
+  Future<CalorieEstimate?> estimateCalories(String mealDescription) async {
+    _setLoadingCalories(true);
+    CalorieEstimate? estimate;
+    try {
+      estimate = await _openAIService.estimateCalories(mealDescription);
+      _clearError();
+    } catch (e) {
+      _setError('Failed to estimate calories: $e');
+    } finally {
+      _setLoadingCalories(false);
+    }
+    return estimate;
+  }
+
   // Meal suggestions
   Future<void> generateMealSuggestions(MealType mealType) async {
     _setLoadingSuggestions(true);

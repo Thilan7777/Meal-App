@@ -47,11 +47,7 @@ class NavigationService {
       GoRoute(
         path: '/meal-suggestions',
         name: 'meal-suggestions',
-        builder: (context, state) {
-          final mealType = state.extra as String?;
-          final selectedMealType = state.pathParameters['mealType'] ?? '';
-          return MealSuggestionsScreen(mealType: selectedMealType);
-        },
+        builder: (context, state) => const MealSuggestionsScreen(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(
