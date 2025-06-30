@@ -159,7 +159,9 @@ class _AddMealScreenState extends State<AddMealScreen> {
     return Container(
       padding: EdgeInsets.all(4.w),
       decoration: BoxDecoration(
-        color: const Color(0xFF38342C),
+        color: Theme.of(context).brightness == Brightness.light
+            ? Colors.greenAccent.withOpacity(1)
+            : const Color(0xFF38342C),
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Row(
@@ -199,9 +201,14 @@ class _AddMealScreenState extends State<AddMealScreen> {
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
         hintText: 'e.g., Rice and curry, String hoppers with dhal',
-        hintStyle: TextStyle(color: Colors.grey[400]),
+        hintStyle: TextStyle(
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.black
+                : Colors.grey[400]),
         filled: true,
-        fillColor: const Color(0xFF38342C),
+        fillColor: Theme.of(context).brightness == Brightness.light
+            ? Colors.purpleAccent.withOpacity(0.5)
+            : Color(0xFF38342C),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.r),
           borderSide: BorderSide.none,
@@ -222,7 +229,9 @@ class _AddMealScreenState extends State<AddMealScreen> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: const Color(0xFF38342C),
+        color: Theme.of(context).brightness == Brightness.light
+            ? Colors.blue.withOpacity(0.7)
+            : Color(0xFF38342C),
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Row(

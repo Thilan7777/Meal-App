@@ -25,7 +25,9 @@ class _StatsScreenState extends State<StatsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).brightness == Brightness.light
+          ? Colors.white
+          : Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
@@ -370,7 +372,9 @@ class _StatsScreenState extends State<StatsScreen> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
+        color: Theme.of(context).brightness == Brightness.light
+            ? color.withOpacity(0.7)
+            : color.withOpacity(0.2),
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: color.withOpacity(0.5)),
       ),
@@ -411,7 +415,9 @@ class _StatsScreenState extends State<StatsScreen> {
         Text(
           'Today\'s Progress',
           style: TextStyle(
-            color: Colors.white,
+            color: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey
+                : Colors.white,
             fontSize: 18.sp,
             fontWeight: FontWeight.bold,
             fontFamily: 'Kanit',
@@ -511,7 +517,9 @@ class _StatsScreenState extends State<StatsScreen> {
             Text(
               label,
               style: TextStyle(
-                color: Colors.white,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Color.fromARGB(225, 150, 139, 117)
+                    : Colors.white,
                 fontSize: 14.sp,
                 fontFamily: 'Kanit',
               ),

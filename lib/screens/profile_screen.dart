@@ -324,7 +324,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: const Color(0xFF38342C),
+        color: Theme.of(context).brightness == Brightness.light
+            ? Color.fromARGB(239, 43, 175, 252)
+            : const Color(0xFF38342C),
         borderRadius: BorderRadius.circular(14.r),
       ),
       child: Column(
@@ -478,7 +480,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: bmiColor.withOpacity(0.2),
+        color: bmiColor.withOpacity(0.3),
         borderRadius: BorderRadius.circular(14.r),
         border: Border.all(color: bmiColor.withOpacity(0.5)),
       ),
@@ -523,7 +525,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.purpleAccent.withOpacity(0.2),
+        color: Colors.purpleAccent.withOpacity(0.5),
         borderRadius: BorderRadius.circular(14.r),
         border: Border.all(color: Colors.purpleAccent.withOpacity(0.5)),
       ),
