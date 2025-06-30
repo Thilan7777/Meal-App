@@ -84,13 +84,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         title: const Text(
           'Profile',
           style: TextStyle(
-            color: Colors.white,
             fontFamily: 'Kanit',
             fontWeight: FontWeight.bold,
           ),
@@ -100,7 +99,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           IconButton(
             icon: Icon(
               _isEditing ? Icons.save : Icons.edit,
-              color: Colors.white,
             ),
             onPressed: _isEditing ? _saveProfile : _toggleEdit,
           ),
@@ -156,7 +154,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Text(
               'Create Your Profile',
               style: TextStyle(
-                color: Colors.white,
                 fontSize: 24.sp,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Kanit',

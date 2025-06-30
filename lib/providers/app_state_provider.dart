@@ -264,6 +264,15 @@ class AppStateProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> clearMealHistory() async {
+    try {
+      await _databaseService.clearMealHistory();
+      await refreshAllData();
+    } catch (e) {
+      _setError('Failed to clear meal history: $e');
+    }
+  }
+
   // Refresh data
   Future<void> _refreshTodayData() async {
     await _loadTodayData();

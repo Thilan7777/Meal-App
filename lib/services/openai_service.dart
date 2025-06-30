@@ -5,9 +5,11 @@ import '../models/meal_model.dart';
 import '../models/daily_log_model.dart';
 
 class OpenAIService {
-  static const String _baseUrl = 'https://api.openai.com/v1/chat/completions';
+  static const String _baseUrl =
+      'https://openrouter.ai/api/v1/chat/completions';
 
-  String get _apiKey => dotenv.env['OPENAI_API_KEY'] ?? '';
+  String get _apiKey =>
+      dotenv.env['OPENROUTER_API_KEY'] ?? dotenv.env['OPENAI_API_KEY'] ?? '';
 
   // Estimate calories for a meal description
   Future<CalorieEstimate> estimateCalories(String mealDescription) async {
@@ -37,16 +39,11 @@ Focus on typical Sri Lankan portion sizes and ingredients.
 ''';
 
       final response = await _makeOpenAIRequest(prompt);
-
-      if (response != null) {
-        return CalorieEstimate.fromJson(response);
-      } else {
-        // Fallback estimation
-        return _getFallbackEstimate(mealDescription);
-      }
+      return CalorieEstimate.fromJson(response);
     } catch (e) {
       print('OpenAI API Error: $e');
-      return _getFallbackEstimate(mealDescription);
+      return _getFallbackEstimate(mealDescription)
+          .copyWith(explanation: 'AI estimation failed: $e');
     }
   }
 
@@ -106,11 +103,10 @@ Requirements:
     }
   }
 
-  // Make HTTP request to OpenAI API
+  // Make HTTP request to OpenRouter
   Future<dynamic> _makeOpenAIRequest(String prompt) async {
     if (_apiKey.isEmpty) {
-      print('OpenAI API key not found');
-      return null;
+      throw Exception('OpenRouter API key not found');
     }
 
     try {
@@ -119,9 +115,10 @@ Requirements:
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $_apiKey',
+          'HTTP-Referer': 'https://localhost' // Required by OpenRouter
         },
         body: jsonEncode({
-          'model': 'gpt-3.5-turbo',
+          'model': 'openai/gpt-4o',
           'messages': [
             {
               'role': 'system',
@@ -141,40 +138,34 @@ Requirements:
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         final content = data['choices'][0]['message']['content'];
-
-        // Clean the response and parse JSON
         final cleanContent = content.trim();
         return jsonDecode(cleanContent);
       } else {
-        print('OpenAI API Error: ${response.statusCode} - ${response.body}');
-        return null;
+        final error = jsonDecode(response.body);
+        throw Exception('OpenRouter Error: ${error['error']['message']}');
       }
     } catch (e) {
-      print('HTTP Request Error: $e');
-      return null;
+      throw Exception('HTTP Request Error: $e');
     }
   }
 
-  // Calculate target calories for each meal type
   double _calculateMealCalories(MealType mealType, double dailyGoal) {
     switch (mealType) {
       case MealType.breakfast:
-        return dailyGoal * 0.25; // 25% of daily calories
+        return dailyGoal * 0.25;
       case MealType.lunch:
-        return dailyGoal * 0.35; // 35% of daily calories
+        return dailyGoal * 0.35;
       case MealType.dinner:
-        return dailyGoal * 0.30; // 30% of daily calories
+        return dailyGoal * 0.30;
       case MealType.snack:
-        return dailyGoal * 0.10; // 10% of daily calories
+        return dailyGoal * 0.10;
     }
   }
 
-  // Fallback calorie estimation when API fails
   CalorieEstimate _getFallbackEstimate(String mealDescription) {
     final description = mealDescription.toLowerCase();
-    double calories = 300; // Default
+    double calories = 300;
 
-    // Simple keyword-based estimation
     if (description.contains('rice') || description.contains('hoppers')) {
       calories += 200;
     }
@@ -193,15 +184,14 @@ Requirements:
 
     return CalorieEstimate(
       calories: calories,
-      protein: calories * 0.15 / 4, // 15% protein
-      carbs: calories * 0.55 / 4, // 55% carbs
-      nutrients: calories * 0.05 / 4, // 5% micronutrients
+      protein: calories * 0.15 / 4,
+      carbs: calories * 0.55 / 4,
+      nutrients: calories * 0.05 / 4,
       confidence: 'low',
       explanation: 'Estimated based on common Sri Lankan meal components',
     );
   }
 
-  // Fallback meal suggestions when API fails
   List<MealSuggestion> _getFallbackSuggestions(
       MealType mealType, double targetCalories) {
     final suggestions = <MealSuggestion>[];
@@ -246,7 +236,7 @@ Requirements:
             ],
             estimatedCalories: targetCalories,
             preparation:
-                'Steam brown rice, prepare fish curry with minimal coconut milk',
+                'Steam rice, make fish curry with minimal coconut milk',
             reasoning: 'Lean protein from fish, complex carbs, high fiber',
             mealType: mealType,
             createdAt: now,
@@ -254,16 +244,10 @@ Requirements:
           MealSuggestion(
             id: '${now.millisecondsSinceEpoch}_2',
             name: 'Vegetable Kottu',
-            ingredients: [
-              'Roti (2 pieces)',
-              'Mixed vegetables',
-              'Egg (1)',
-              'Onions'
-            ],
+            ingredients: ['Roti (2)', 'Mixed vegetables', 'Egg (1)', 'Onions'],
             estimatedCalories: targetCalories * 0.9,
-            preparation:
-                'Stir-fry vegetables with minimal oil, add chopped roti',
-            reasoning: 'Balanced meal with vegetables and moderate carbs',
+            preparation: 'Stir-fry veggies with low oil, add roti pieces',
+            reasoning: 'Balanced meal with veg, protein and carbs',
             mealType: mealType,
             createdAt: now,
           ),
@@ -275,15 +259,10 @@ Requirements:
           MealSuggestion(
             id: '${now.millisecondsSinceEpoch}_1',
             name: 'Grilled Chicken with Vegetables',
-            ingredients: [
-              'Chicken breast',
-              'Broccoli',
-              'Carrots',
-              'Green beans'
-            ],
+            ingredients: ['Chicken breast', 'Broccoli', 'Carrots', 'Beans'],
             estimatedCalories: targetCalories,
-            preparation: 'Grill chicken with herbs, steam vegetables',
-            reasoning: 'High protein, low carb dinner for weight loss',
+            preparation: 'Grill chicken with herbs, steam veggies',
+            reasoning: 'High protein, low carb, ideal for dinner',
             mealType: mealType,
             createdAt: now,
           ),
@@ -296,8 +275,8 @@ Requirements:
               'Whole grain bread (1 slice)'
             ],
             estimatedCalories: targetCalories * 0.8,
-            preparation: 'Boil vegetables and lentils, minimal salt and oil',
-            reasoning: 'Light dinner, high fiber, easy to digest',
+            preparation: 'Boil veggies and lentils, serve with bread',
+            reasoning: 'Light, fiber-rich, good for digestion',
             mealType: mealType,
             createdAt: now,
           ),
@@ -311,8 +290,8 @@ Requirements:
             name: 'Fruit Salad',
             ingredients: ['Apple', 'Orange', 'Grapes', 'Lime juice'],
             estimatedCalories: targetCalories,
-            preparation: 'Cut fruits, add lime juice',
-            reasoning: 'Natural sugars, vitamins, low calorie',
+            preparation: 'Chop fruits, mix with lime',
+            reasoning: 'Low calorie, high in vitamins and fiber',
             mealType: mealType,
             createdAt: now,
           ),

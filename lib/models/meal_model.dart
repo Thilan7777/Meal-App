@@ -187,4 +187,22 @@ class CalorieEstimate {
       'explanation': explanation,
     };
   }
+
+  CalorieEstimate copyWith({
+    double? calories,
+    double? protein,
+    double? carbs,
+    double? nutrients,
+    String? confidence,
+    String? explanation,
+  }) {
+    return CalorieEstimate(
+      calories: calories ?? this.calories,
+      protein: protein ?? this.protein,
+      carbs: carbs ?? this.carbs,
+      nutrients: nutrients ?? this.nutrients,
+      confidence: confidence ?? this.confidence,
+      explanation: explanation ?? this.explanation,
+    );
+  }
 }

@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Consumer<AppStateProvider>(
       builder: (context, appState, child) {
         if (appState.isLoading && appState.currentUser == null) {
-          return const Scaffold(
+          return Scaffold(
             backgroundColor: Colors.black,
             body: Center(child: CircularProgressIndicator()),
           );
@@ -62,9 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
         return Scaffold(
           key: _scaffoldKey,
-          backgroundColor: Colors.black,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           drawer: Drawer(
-            backgroundColor: Colors.black,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
@@ -81,44 +81,32 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 ListTile(
-                  leading: const Icon(color: Colors.white, Icons.person),
-                  title: const Text('Profile',
-                      style: TextStyle(
-                        color: Colors.white,
-                      )),
+                  leading: const Icon(Icons.person),
+                  title: const Text('Profile'),
                   onTap: () {
                     context.go('/profile');
                     Navigator.pop(context);
                   },
                 ),
                 ListTile(
-                  leading: const Icon(color: Colors.white, Icons.bar_chart),
-                  title: const Text('Weekly Summary',
-                      style: TextStyle(
-                        color: Colors.white,
-                      )),
+                  leading: const Icon(Icons.bar_chart),
+                  title: const Text('Weekly Summary'),
                   onTap: () {
                     context.go('/stats');
                     Navigator.pop(context);
                   },
                 ),
                 ListTile(
-                  leading: const Icon(color: Colors.white, Icons.local_drink),
-                  title: const Text('Water Tracker',
-                      style: TextStyle(
-                        color: Colors.white,
-                      )),
+                  leading: const Icon(Icons.local_drink),
+                  title: const Text('Water Tracker'),
                   onTap: () {
                     // TODO: Implement Water Tracker page
                     Navigator.pop(context);
                   },
                 ),
                 ListTile(
-                  leading: const Icon(color: Colors.white, Icons.import_export),
-                  title: const Text('Export Data',
-                      style: TextStyle(
-                        color: Colors.white,
-                      )),
+                  leading: const Icon(Icons.import_export),
+                  title: const Text('Export Data'),
                   onTap: () {
                     // TODO: Implement Export Data functionality
                     Navigator.pop(context);
@@ -130,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: AppBar(
             automaticallyImplyLeading: false,
             toolbarHeight: 100,
-            backgroundColor: Colors.black,
+            backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
             title: Row(
               children: [
                 GestureDetector(

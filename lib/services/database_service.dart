@@ -321,6 +321,12 @@ class DatabaseService {
     );
   }
 
+  Future<void> clearMealHistory() async {
+    final db = await database;
+    await db.delete('meals');
+    await db.delete('daily_logs');
+  }
+
   // Close database
   Future<void> close() async {
     final db = await database;
