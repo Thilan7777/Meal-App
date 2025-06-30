@@ -17,7 +17,9 @@ class BottomNavBar extends StatelessWidget {
       child: Container(
         height: 50,
         decoration: BoxDecoration(
-          color: Color(0xFF38342C),
+          color: Theme.of(context).brightness == Brightness.light
+              ? Color.fromARGB(111, 56, 52, 44)
+              : Color(0xFF38342C),
           borderRadius: BorderRadius.circular(14),
         ),
         child: Row(
@@ -76,7 +78,7 @@ class _NavBarItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: const Color.fromARGB(0, 255, 250, 250),
       shape: const CircleBorder(),
       child: InkWell(
         splashColor: splashColor,
@@ -86,7 +88,7 @@ class _NavBarItem extends StatelessWidget {
           width: 44,
           height: 44,
           decoration: BoxDecoration(
-            color: isActive ? activeColor : Colors.black,
+            color: isActive ? activeColor : Color.fromARGB(82, 56, 52, 44),
             shape: BoxShape.circle,
           ),
           child: Center(child: icon),

@@ -10,6 +10,7 @@ class CustomWidgets extends StatelessWidget {
   final double imageHeight;
   final Color containerColor;
   final Color progressColor;
+  final Color backgroundColor;
   final String text;
   final BoxShape boxShape;
   final double height;
@@ -27,7 +28,8 @@ class CustomWidgets extends StatelessWidget {
       this.height = 0.0,
       this.width = 0.0,
       this.alignment = Alignment.center,
-      this.progressColor = Colors.blue});
+      this.progressColor = Colors.blue,
+      this.backgroundColor = Colors.red});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class CustomWidgets extends StatelessWidget {
             LinearPercentIndicator(
               percent: 0.5, // static value
               width: 55,
-              backgroundColor: Colors.black,
+              backgroundColor: backgroundColor,
               progressColor: progressColor,
               lineHeight: 6,
               barRadius: Radius.circular(3),

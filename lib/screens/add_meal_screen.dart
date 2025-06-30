@@ -37,7 +37,8 @@ class _AddMealScreenState extends State<AddMealScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      //backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
@@ -144,7 +145,9 @@ class _AddMealScreenState extends State<AddMealScreen> {
     return Text(
       title,
       style: TextStyle(
-        color: Colors.white,
+        color: Theme.of(context).brightness == Brightness.light
+            ? Colors.black
+            : Colors.white,
         fontSize: 18.sp,
         fontWeight: FontWeight.bold,
         fontFamily: 'Kanit',

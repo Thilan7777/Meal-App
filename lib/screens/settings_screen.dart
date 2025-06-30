@@ -17,36 +17,79 @@ class SettingsScreen extends StatelessWidget {
           return ListView(
             children: [
               ListTile(
-                title: const Text('Theme'),
+                title: Text(
+                  'Theme',
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.black
+                        : Colors.white,
+                  ),
+                ),
                 subtitle: Text(
                   themeProvider.themeMode
                       .toString()
                       .split('.')
                       .last
                       .capitalize(),
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.black54
+                        : Colors.white70,
+                  ),
                 ),
                 onTap: () => _showThemeDialog(context, themeProvider),
               ),
               ListTile(
-                title: const Text('Set Daily Calorie Goal'),
+                title: Text(
+                  'Set Daily Calorie Goal',
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.black
+                        : Colors.white,
+                  ),
+                ),
                 subtitle: Text(
                   '${appState.currentUser?.dailyCalorieGoal.round() ?? 0} kcal',
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.black54
+                        : Colors.white70,
+                  ),
                 ),
                 onTap: () => _showCalorieGoalDialog(context, appState),
               ),
               SwitchListTile(
-                title: const Text('Enable Experimental Features'),
-                value: false, // TODO: Implement experimental features
-                onChanged: (value) {
-                  // TODO: Implement experimental features toggle
-                },
+                title: Text(
+                  'Enable Experimental Features',
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.black
+                        : Colors.white,
+                  ),
+                ),
+                value: false,
+                onChanged: (value) {},
               ),
               ListTile(
-                title: const Text('Clear Meal History'),
+                title: Text(
+                  'Clear Meal History',
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.black
+                        : Colors.white,
+                  ),
+                ),
                 onTap: () => _showClearHistoryDialog(context, appState),
               ),
               ListTile(
-                title: const Text('Privacy Terms'),
+                title: Text(
+                  'Privacy Terms',
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.black
+                        : Colors.white,
+                  ),
+                ),
                 onTap: () {
                   // TODO: Implement privacy terms navigation
                 },

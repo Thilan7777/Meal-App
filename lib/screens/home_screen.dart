@@ -81,32 +81,77 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 ListTile(
-                  leading: const Icon(Icons.person),
-                  title: const Text('Profile'),
+                  leading: Icon(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.black
+                        : Colors.white,
+                    Icons.person,
+                  ),
+                  title: Text(
+                    'Profile',
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
+                    ),
+                  ),
                   onTap: () {
                     context.go('/profile');
                     Navigator.pop(context);
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.bar_chart),
-                  title: const Text('Weekly Summary'),
+                  leading: Icon(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      Icons.bar_chart),
+                  title: Text(
+                    'Weekly Summary',
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
+                    ),
+                  ),
                   onTap: () {
                     context.go('/stats');
                     Navigator.pop(context);
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.local_drink),
-                  title: const Text('Water Tracker'),
+                  leading: Icon(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      Icons.local_drink),
+                  title: Text(
+                    'Water Tracker',
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
+                    ),
+                  ),
                   onTap: () {
                     // TODO: Implement Water Tracker page
                     Navigator.pop(context);
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.import_export),
-                  title: const Text('Export Data'),
+                  leading: Icon(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      Icons.import_export),
+                  title: Text(
+                    'Export Data',
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
+                    ),
+                  ),
                   onTap: () {
                     // TODO: Implement Export Data functionality
                     Navigator.pop(context);
@@ -189,7 +234,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           SizedBox(height: 10.h),
                           CustomContainer(
-                            containerColor: const Color(0xFF38342C),
+                            containerColor:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Color.fromARGB(80, 56, 52, 44)
+                                    : Color(0xFF38342C),
                             width: 300.w,
                             height: 29.h,
                             child: FittedBox(
@@ -219,17 +267,32 @@ class _HomeScreenState extends State<HomeScreen> {
                               _buildNutrientStat(
                                   'assets/Protein.png',
                                   '${todayLog?.totalProtein.round() ?? 0}g',
-                                  'Protein'),
+                                  'Protein',
+                                  Colors.blue,
+                                  Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? Color.fromARGB(244, 150, 139, 117)
+                                      : Colors.black),
                               SizedBox(width: 15.w),
                               _buildNutrientStat(
                                   'assets/Carbs.png',
                                   '${todayLog?.totalCarbs.round() ?? 0}g',
-                                  'Carbs'),
+                                  'Carbs',
+                                  Colors.lightGreenAccent,
+                                  Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? Color.fromARGB(244, 150, 139, 117)
+                                      : Colors.black),
                               SizedBox(width: 15.w),
                               _buildNutrientStat(
                                   'assets/Carrot.png',
                                   '${todayLog?.totalNutrients.round() ?? 0}g',
-                                  'Nutrients'),
+                                  'Nutrients',
+                                  Colors.pinkAccent,
+                                  Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? Color.fromARGB(244, 150, 139, 117)
+                                      : Colors.black),
                               Padding(
                                 padding: const EdgeInsets.only(left: 20),
                                 child: DailyIntakeIndicator(
@@ -461,17 +524,22 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildNutrientStat(String imagePath, String text, String label) {
+  Widget _buildNutrientStat(String imagePath, String text, String label,
+      Color progressColor, Color backgroundColor) {
     return Column(
       children: [
         CustomWidgets(
+          progressColor: progressColor,
+          backgroundColor: backgroundColor,
           imagePath: imagePath,
           text: text,
           imageHeight: 15,
           imageWidth: 15,
           width: 55,
           height: 60,
-          containerColor: const Color(0xFF38342C),
+          containerColor: Theme.of(context).brightness == Brightness.light
+              ? Color.fromARGB(158, 150, 139, 117)
+              : Color(0xFF38342C),
           boxShape: BoxShape.rectangle,
         ),
         SizedBox(height: 2.h),

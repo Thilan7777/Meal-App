@@ -14,7 +14,9 @@ class ShellScreen extends StatelessWidget {
     final selectedIndex = NavigationService.getCurrentTabIndex(location);
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).brightness == Brightness.light
+          ? Colors.white
+          : Colors.black,
       body: child,
       bottomNavigationBar: BottomNavBar(
         selectedIndex: selectedIndex,
