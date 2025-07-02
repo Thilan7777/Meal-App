@@ -44,7 +44,7 @@ class BottomNavBar extends StatelessWidget {
               splashColor: Colors.amberAccent,
               activeColor: const Color.fromARGB(68, 255, 214, 64),
               onTap: () => onTap(2),
-              icon: Image.asset("assets/Sparkling.png"),
+              icon: Image.asset("assets/planner_review.png"),
             ),
             _NavBarItem(
               isActive: selectedIndex == 3,
