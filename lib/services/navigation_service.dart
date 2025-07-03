@@ -8,18 +8,24 @@ import '../screens/meal_suggestions_screen.dart';
 import '../screens/calorie_count_screen.dart';
 import '../screens/settings_screen.dart';
 import '../screens/shell_screen.dart';
+import '../screens/splash_screen.dart';
 
 class NavigationService {
   static final GoRouter router = GoRouter(
     initialLocation: '/',
     routes: [
+      GoRoute(
+        path: '/',
+        name: 'splash',
+        builder: (context, state) => SplashScreen(),
+      ),
       ShellRoute(
         builder: (context, state, child) {
           return ShellScreen(child: child);
         },
         routes: [
           GoRoute(
-            path: '/',
+            path: '/home',
             name: 'home',
             builder: (context, state) => const HomeScreen(),
           ),
@@ -80,7 +86,7 @@ class NavigationService {
 
   // Navigation helper methods
   static void goHome(BuildContext context) {
-    context.go('/');
+    context.go('/home');
   }
 
   static void goToAddMeal(BuildContext context) {
@@ -128,7 +134,7 @@ class NavigationService {
   // Get current tab index from route
   static int getCurrentTabIndex(String location) {
     switch (location) {
-      case '/':
+      case '/home':
         return 0;
       case '/add-meal':
         return 1;
