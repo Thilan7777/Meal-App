@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:meal_app/screens/home_screen.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -32,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Logo
-              SvgPicture.asset('assets/Logo.svg', width: 43, height: 43.0),
+              Image.asset('assets/new logo.png', width: 43, height: 43.0),
               SizedBox(width: 15),
               // Tagline
               Stack(
