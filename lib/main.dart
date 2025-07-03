@@ -5,8 +5,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'providers/app_state_provider.dart';
 import 'providers/theme_provider.dart';
 import 'services/database_service.dart';
-import 'services/navigation_service.dart';
+
 import 'theme/theme.dart';
+import 'screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,12 +27,12 @@ void main() async {
         minTextAdapt: true,
         builder: (context, child) {
           final themeProvider = Provider.of<ThemeProvider>(context);
-          return MaterialApp.router(
+          return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: themeProvider.themeMode,
-            routerConfig: NavigationService.router,
+            home: SplashScreen(),
           );
         },
       ),
